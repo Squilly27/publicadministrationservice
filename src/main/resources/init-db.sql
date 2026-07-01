@@ -60,6 +60,7 @@ CREATE INDEX idx_allegato_richiesta ON allegato(richiesta_id);
 -- Inserimento utenti di test
 INSERT INTO utente (username, password, nome_completo, email, ruolo, attivo) VALUES
 ('operatore1', '$2a$10$MDHQTcbIkr8DGctuceqJ0uF625VHDixacrs3QoZEgHC7g/SmNbnKC', 'Mario Rossi', 'mario.rossi@comune.it', 'OPERATORE', TRUE),
-('responsabile1', '$2a$10$MDHQTcbIkr8DGctuceqJ0uF625VHDixacrs3QoZEgHC7g/SmNbnKC', 'Anna Bianchi', 'anna.bianchi@comune.it', 'RESPONSABILE', TRUE)
+('responsabile1', '$2a$10$MDHQTcbIkr8DGctuceqJ0uF625VHDixacrs3QoZEgHC7g/SmNbnKC', 'Anna Bianchi', 'anna.bianchi@comune.it', 'RESPONSABILE', TRUE),
+('admin1', '$2a$10$MDHQTcbIkr8DGctuceqJ0uF625VHDixacrs3QoZEgHC7g/SmNbnKC', 'System Admin', 'admin@comune.it', 'ADMIN', TRUE)
 ON CONFLICT (username) DO NOTHING;
 

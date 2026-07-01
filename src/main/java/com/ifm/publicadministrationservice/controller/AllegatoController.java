@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -30,7 +29,7 @@ public class AllegatoController {
     private AllegatoService allegatoService;
 
     @PostMapping
-    @PreAuthorize("hasRole('OPERATORE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATORE')")
     public ResponseEntity<AllegatoDTO> uploadAllegato(
             @PathVariable Long richiestaId,
             @RequestParam("file") MultipartFile file) {
@@ -79,7 +78,7 @@ public class AllegatoController {
     }
 
     @DeleteMapping("/{allegatoId}")
-    @PreAuthorize("hasRole('OPERATORE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATORE')")
     public ResponseEntity<Void> deleteAllegato(@PathVariable Long allegatoId) {
         try {
             allegatoService.deleteAllegato(allegatoId);

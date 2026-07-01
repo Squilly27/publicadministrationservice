@@ -13,11 +13,13 @@ ALTER TABLE UTENTE ALTER COLUMN ID RESTART WITH 1;
 -- Inserimento utenti di test
 INSERT INTO UTENTE (USERNAME, PASSWORD, NOME_COMPLETO, EMAIL, RUOLO, ATTIVO, DATA_CREAZIONE) VALUES
 ('operatore1', '$2a$10$MDHQTcbIkr8DGctuceqJ0uF625VHDixacrs3QoZEgHC7g/SmNbnKC', 'Mario Rossi', 'mario.rossi@comune.it', 'OPERATORE', TRUE, CURRENT_TIMESTAMP),
-('responsabile1', '$2a$10$MDHQTcbIkr8DGctuceqJ0uF625VHDixacrs3QoZEgHC7g/SmNbnKC', 'Anna Bianchi', 'anna.bianchi@comune.it', 'RESPONSABILE', TRUE, CURRENT_TIMESTAMP);
+('responsabile1', '$2a$10$MDHQTcbIkr8DGctuceqJ0uF625VHDixacrs3QoZEgHC7g/SmNbnKC', 'Anna Bianchi', 'anna.bianchi@comune.it', 'RESPONSABILE', TRUE, CURRENT_TIMESTAMP),
+('admin1', '$2a$10$MDHQTcbIkr8DGctuceqJ0uF625VHDixacrs3QoZEgHC7g/SmNbnKC', 'System Admin', 'admin@comune.it', 'ADMIN', TRUE, CURRENT_TIMESTAMP);
 
 -- Nota: Le password sono state codificate con BCrypt
 -- Username: operatore1, Password: password123
 -- Username: responsabile1, Password: password123
+-- Username: admin1, Password: password123
 
 -- Inserimento richieste di esempio
 INSERT INTO RICHIESTA_ACCESSO_ATTI (NUMERO_PROTOCOLLO, STATO, NOME_RICHIEDENTE, COGNOME_RICHIEDENTE, EMAIL_RICHIEDENTE, TELEFONO_RICHIEDENTE, OGGETTO, DESCRIZIONE, DATA_PRESENTAZIONE, DATA_MODIFICA, CREATO_DA) VALUES
@@ -26,7 +28,7 @@ INSERT INTO RICHIESTA_ACCESSO_ATTI (NUMERO_PROTOCOLLO, STATO, NOME_RICHIEDENTE, 
 
 -- Inserimento storico stati
 INSERT INTO STORICO_STATO (RICHIESTA_ID, STATO_PRECEDENTE, STATO_NUOVO, DATA_CAMBIO, NOTA, UTENTE_CAMBIO) VALUES
-(1, NULL, 'PRESENTATA', CURRENT_TIMESTAMP, 'Pratica presentata', 'operatore1'),
-(2, NULL, 'PRESENTATA', CURRENT_TIMESTAMP, 'Pratica presentata', 'operatore1'),
+(1, NULL, 'PRESENTATA', CURRENT_TIMESTAMP, 'Pratica presentata', 'responsabile1'),
+(2, NULL, 'PRESENTATA', CURRENT_TIMESTAMP, 'Pratica presentata', 'responsabile1'),
 (2, 'PRESENTATA', 'IN_ISTRUTTORIA', CURRENT_TIMESTAMP, 'Pratica presa in carico per istruttoria', 'responsabile1');
 

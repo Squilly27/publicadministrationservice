@@ -26,7 +26,7 @@ public class RichiestaAccessoAttiController {
     private RichiestaAccessoAttiService richiestaService;
 
     @PostMapping
-    @PreAuthorize("hasRole('OPERATORE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATORE')")
     public ResponseEntity<RichiestaAccessoAttiDTO> createRichiesta(@Valid @RequestBody CreateRichiestaDTO dto) {
         try {
             RichiestaAccessoAttiDTO richiesta = richiestaService.createRichiesta(dto);
@@ -65,7 +65,7 @@ public class RichiestaAccessoAttiController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('OPERATORE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATORE')")
     public ResponseEntity<RichiestaAccessoAttiDTO> updateRichiesta(
             @PathVariable Long id,
             @Valid @RequestBody CreateRichiestaDTO dto) {
@@ -79,7 +79,7 @@ public class RichiestaAccessoAttiController {
     }
 
     @PostMapping("/{id}/cambio-stato")
-    @PreAuthorize("hasRole('RESPONSABILE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSABILE')")
     public ResponseEntity<RichiestaAccessoAttiDTO> cambiaStato(
             @PathVariable Long id,
             @Valid @RequestBody CambioStatoDTO dto) {
