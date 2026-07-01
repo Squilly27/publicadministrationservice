@@ -39,6 +39,9 @@ public class AllegatoService {
     @Value("${allegati.upload.dir:uploads}")
     private String uploadDir;
 
+    /**
+     * Salva un allegato su filesystem e database associandolo alla richiesta.
+     */
     @Transactional
     public AllegatoDTO uploadAllegato(Long richiestaId, MultipartFile file) throws IOException {
         RichiestaAccessoAtti richiesta = richiestaRepository.findById(richiestaId)
@@ -73,17 +76,26 @@ public class AllegatoService {
         return modelMapper.map(allegato, AllegatoDTO.class);
     }
 
+    /**
+     * Restituisce tutti gli allegati associati a una richiesta.
+     */
     public List<AllegatoDTO> getAllegati(Long richiestaId) {
         return allegatoRepository.findByRichiestaId(richiestaId).stream()
                 .map(allegato -> modelMapper.map(allegato, AllegatoDTO.class))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Recupera un allegato tramite identificativo o solleva un errore se non esiste.
+     */
     public Allegato getAllegato(Long allegatoId) {
         return allegatoRepository.findById(allegatoId)
                 .orElseThrow(() -> new RuntimeException("Allegato non trovato"));
     }
 
+    /**
+     * Elimina il file dal filesystem e la relativa riga dal database.
+     */
     @Transactional
     public void deleteAllegato(Long allegatoId) throws IOException {
         Allegato allegato = getAllegato(allegatoId);
@@ -97,6 +109,9 @@ public class AllegatoService {
         log.info("Allegato cancellato: {}", allegatoId);
     }
 
+    /**
+     * Recupera il nome utente corrente dall'autenticazione Spring Security.
+     */
     private String getUsername() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth != null ? auth.getName() : "SYSTEM";

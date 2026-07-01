@@ -28,6 +28,9 @@ public class AllegatoController {
     @Autowired
     private AllegatoService allegatoService;
 
+    /**
+     * Carica un nuovo allegato associandolo alla richiesta indicata.
+     */
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'OPERATORE')")
     public ResponseEntity<AllegatoDTO> uploadAllegato(
@@ -45,6 +48,9 @@ public class AllegatoController {
         }
     }
 
+    /**
+     * Restituisce tutti gli allegati collegati a una richiesta.
+     */
     @GetMapping
     public ResponseEntity<List<AllegatoDTO>> getAllegati(@PathVariable Long richiestaId) {
         try {
@@ -56,6 +62,9 @@ public class AllegatoController {
         }
     }
 
+    /**
+     * Scarica il file dell'allegato specificato.
+     */
     @GetMapping("/{allegatoId}/download")
     public ResponseEntity<Resource> downloadAllegato(@PathVariable Long allegatoId) {
         try {
@@ -77,6 +86,9 @@ public class AllegatoController {
         }
     }
 
+    /**
+     * Elimina l'allegato selezionato sia dal database sia dal filesystem.
+     */
     @DeleteMapping("/{allegatoId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'OPERATORE')")
     public ResponseEntity<Void> deleteAllegato(@PathVariable Long allegatoId) {

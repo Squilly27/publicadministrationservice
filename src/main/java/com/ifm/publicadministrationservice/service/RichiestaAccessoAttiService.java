@@ -56,6 +56,9 @@ public class RichiestaAccessoAttiService {
                         java.util.List.of(StatoRichiesta.CHIUSA))
             );
 
+    /**
+     * Crea una nuova richiesta, inizializza lo stato iniziale e salva lo storico.
+     */
     @Transactional
     public RichiestaAccessoAttiDTO createRichiesta(CreateRichiestaDTO dto) {
         String numeroProtocollo = generaNumeroProtocollo();
@@ -90,6 +93,9 @@ public class RichiestaAccessoAttiService {
         return toDto(richiesta);
     }
 
+    /**
+     * Aggiorna i dati anagrafici e descrittivi di una richiesta esistente.
+     */
     @Transactional
     public RichiestaAccessoAttiDTO updateRichiesta(Long id, CreateRichiestaDTO dto) {
         RichiestaAccessoAtti richiesta = richiestaRepository.findById(id)
@@ -110,6 +116,9 @@ public class RichiestaAccessoAttiService {
         return toDto(richiesta);
     }
 
+    /**
+     * Recupera il dettaglio di una richiesta tramite il suo identificativo.
+     */
     @Transactional(readOnly = true)
     public RichiestaAccessoAttiDTO getRichiestaById(Long id) {
         RichiestaAccessoAtti richiesta = richiestaRepository.findById(id)
@@ -117,6 +126,9 @@ public class RichiestaAccessoAttiService {
         return toDto(richiesta);
     }
 
+    /**
+     * Restituisce tutte le richieste in formato paginato.
+     */
     @Transactional(readOnly = true)
     public Page<RichiestaAccessoAttiDTO> getAllRichieste(Pageable pageable) {
         Page<RichiestaAccessoAtti> page = richiestaRepository.findAll(pageable);
@@ -126,6 +138,9 @@ public class RichiestaAccessoAttiService {
         return new PageImpl<>(dtos, pageable, page.getTotalElements());
     }
 
+    /**
+     * Filtra le richieste in base ai criteri opzionali ricevuti.
+     */
     @Transactional(readOnly = true)
     public Page<RichiestaAccessoAttiDTO> filterRichieste(
             Optional<StatoRichiesta> stato,
@@ -152,6 +167,9 @@ public class RichiestaAccessoAttiService {
         return new PageImpl<>(dtos, pageable, page.getTotalElements());
     }
 
+    /**
+     * Cambia lo stato di una richiesta verificando la validità della transizione.
+     */
     @Transactional
     public RichiestaAccessoAttiDTO cambiaStato(Long id, CambioStatoDTO dto) {
         RichiestaAccessoAtti richiesta = richiestaRepository.findById(id)
@@ -187,6 +205,9 @@ public class RichiestaAccessoAttiService {
         return toDto(richiesta);
     }
 
+    /**
+     * Converte l'entità richiesta nel relativo DTO completo di allegati e storico.
+     */
     private RichiestaAccessoAttiDTO toDto(RichiestaAccessoAtti richiesta) {
         RichiestaAccessoAttiDTO dto = RichiestaAccessoAttiDTO.builder()
                 .id(richiesta.getId())
@@ -216,14 +237,23 @@ public class RichiestaAccessoAttiService {
         return dto;
     }
 
+    /**
+     * Verifica se la transizione di stato richiesta è consentita dal workflow.
+     */
     private boolean isTransizioneValida(StatoRichiesta da, StatoRichiesta a) {
         return TRANSIZIONI_VALIDE.getOrDefault(da, java.util.List.of()).contains(a);
     }
 
+    /**
+     * Genera un numero di protocollo univoco basato sul timestamp corrente.
+     */
     private String generaNumeroProtocollo() {
         return "PROT-" + System.currentTimeMillis();
     }
 
+    /**
+     * Recupera il nome utente dall'autenticazione corrente o usa SYSTEM come fallback.
+     */
     private String getUsername() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth != null ? auth.getName() : "SYSTEM";

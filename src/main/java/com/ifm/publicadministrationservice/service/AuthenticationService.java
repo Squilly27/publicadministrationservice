@@ -31,6 +31,9 @@ public class AuthenticationService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Autentica l'utente, genera il token JWT e restituisce i dati essenziali del profilo.
+     */
     @Transactional
     public LoginResponse login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
@@ -57,6 +60,9 @@ public class AuthenticationService {
                 .build();
     }
 
+    /**
+     * Registra un nuovo utente dopo aver verificato che username ed email siano univoci.
+     */
     @Transactional
     public void register(CreateUtenteDTO dto) {
         if (utenteRepository.findByUsername(dto.getUsername()).isPresent()) {

@@ -19,6 +19,9 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    /**
+     * Esegue il login dell'utente e restituisce il token JWT con i dati profilo.
+     */
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         try {
@@ -30,6 +33,9 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Registra un nuovo utente nel sistema con il ruolo specificato.
+     */
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody CreateUtenteDTO dto) {
         try {

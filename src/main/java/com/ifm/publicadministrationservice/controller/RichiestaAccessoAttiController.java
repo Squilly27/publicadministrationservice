@@ -25,6 +25,9 @@ public class RichiestaAccessoAttiController {
     @Autowired
     private RichiestaAccessoAttiService richiestaService;
 
+    /**
+     * Crea una nuova richiesta di accesso agli atti.
+     */
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'OPERATORE')")
     public ResponseEntity<RichiestaAccessoAttiDTO> createRichiesta(@Valid @RequestBody CreateRichiestaDTO dto) {
@@ -37,6 +40,9 @@ public class RichiestaAccessoAttiController {
         }
     }
 
+    /**
+     * Restituisce l'elenco paginato delle richieste con eventuali filtri opzionali.
+     */
     @GetMapping
     public ResponseEntity<Page<RichiestaAccessoAttiDTO>> getAllRichieste(
             @RequestParam(required = false) Optional<StatoRichiesta> stato,
@@ -53,6 +59,9 @@ public class RichiestaAccessoAttiController {
         }
     }
 
+    /**
+     * Recupera il dettaglio di una richiesta tramite identificativo.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<RichiestaAccessoAttiDTO> getRichiestaById(@PathVariable Long id) {
         try {
@@ -64,6 +73,9 @@ public class RichiestaAccessoAttiController {
         }
     }
 
+    /**
+     * Aggiorna i dati anagrafici e descrittivi di una richiesta esistente.
+     */
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'OPERATORE')")
     public ResponseEntity<RichiestaAccessoAttiDTO> updateRichiesta(
@@ -78,6 +90,9 @@ public class RichiestaAccessoAttiController {
         }
     }
 
+    /**
+     * Cambia lo stato di una richiesta e registra l'operazione nello storico.
+     */
     @PostMapping("/{id}/cambio-stato")
     @PreAuthorize("hasAnyRole('ADMIN', 'RESPONSABILE')")
     public ResponseEntity<RichiestaAccessoAttiDTO> cambiaStato(
