@@ -28,6 +28,7 @@ public class RichiestaAccessoAttiControllerTest {
     @MockBean
     private RichiestaAccessoAttiService richiestaService;
 
+    // Verifica che un operatore possa creare una richiesta.
     @Test
     @WithMockUser(roles = "OPERATORE")
     void testCreateRichiestaWithOperatoreRole() throws Exception {
@@ -45,6 +46,7 @@ public class RichiestaAccessoAttiControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    // Verifica che un ruolo non autorizzato riceva 403 sulla creazione.
     @Test
     @WithMockUser(roles = "RESPONSABILE")
     void testCreateRichiestaWithResponsabileRoleUnauthorized() throws Exception {
@@ -62,10 +64,10 @@ public class RichiestaAccessoAttiControllerTest {
                 .andExpect(status().isForbidden());
     }
 
+    // Verifica che l'accesso senza autenticazione sia rifiutato.
     @Test
     void testGetRichiesteWithoutAuthentication() throws Exception {
         mockMvc.perform(get("/api/richieste"))
                 .andExpect(status().isUnauthorized());
     }
 }
-

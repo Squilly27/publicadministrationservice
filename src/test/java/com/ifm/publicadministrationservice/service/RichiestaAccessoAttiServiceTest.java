@@ -43,6 +43,7 @@ public class RichiestaAccessoAttiServiceTest {
         SecurityContextHolder.clearContext();
     }
 
+    // Controlla che una richiesta venga creata e salvata con storico iniziale.
     @Test
     void testCreateRichiesta() {
         // Arrange
@@ -76,6 +77,7 @@ public class RichiestaAccessoAttiServiceTest {
         verify(storicoRepository, times(1)).save(any());
     }
 
+    // Verifica il recupero di una richiesta esistente per id.
     @Test
     void testGetRichiestaById() {
         // Arrange
@@ -93,6 +95,7 @@ public class RichiestaAccessoAttiServiceTest {
         verify(richiestaRepository, times(1)).findById(id);
     }
 
+    // Verifica che venga sollevata un'eccezione se la richiesta non esiste.
     @Test
     void testGetRichiestaByIdNotFound() {
         // Arrange
@@ -103,4 +106,3 @@ public class RichiestaAccessoAttiServiceTest {
         assertThrows(RuntimeException.class, () -> richiestaService.getRichiestaById(id));
     }
 }
-
